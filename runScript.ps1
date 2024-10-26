@@ -4,4 +4,5 @@ Invoke-WebRequest -Uri $url -OutFile $output
 $destination = "C:\repo-folder"
 Expand-Archive -Path $output -DestinationPath $destination
 cd $destination
+cd ".\CyberpatriotScript-main\"
 .\main.ps1
