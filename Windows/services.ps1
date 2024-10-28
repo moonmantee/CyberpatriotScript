@@ -42,19 +42,12 @@ $servicesToDisable = @(
     "W3SVC",
     "XboxGipSvc",
     "xbgm",
-    "XblAuthManager",   
+    "XblAuthManager",
     "XblGameSave",
     "XboxNetApiSvc"
-)
-$servicesToEnable = @(
-    "wscsvc"
 )
 
 foreach($service in $servicesToDisable){
     Stop-Service -Name $service -ErrorAction SilentlyContinue
     Set-Service -Name $service -StartupType Disabled
-}
-foreach($service in $servicesToEnable){
-    Set-Service -Name $service -StartupType Automatic -ErrorAction SilentlyContinue
-    Start-Service -Name $service -ErrorAction SilentlyContinue
 }
