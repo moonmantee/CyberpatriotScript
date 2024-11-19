@@ -28,3 +28,9 @@ if ($response -eq 'y' -or $response -eq 'Y') {
     Write-Host "Continuing..."
     & .\services.ps1
 }
+
+$response = Read-Host "Would you like to delete media files [y/n]"
+if ($response -eq 'y' -or $response -eq 'Y') {
+    Write-Host "Continuing..."
+    & .\media.ps1
+}
