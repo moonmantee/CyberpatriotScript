@@ -413,6 +413,31 @@ $registrySettings = @(
 
 )
 
+# Function to grant full control to the current user for a given registry key
+function Grant-FullControlToRegistryKey {
+    param (
+        [string]$RegistryPath
+    )
+
+    try {
+        # Open the registry key in writable mode
+        $baseKey = Get-Item -Path $RegistryPath
+        $acl = $baseKey.GetAccessControl()
+
+        # Define the rule to grant Full Control to the current user
+        $user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+        $rule = New-Object System.Security.AccessControl.RegistryAccessRule($user, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
+
+        # Add the rule and set the ACL
+        $acl.SetAccessRule($rule)
+        $baseKey.SetAccessControl($acl)
+        Write-Host "Granted Full Control to $RegistryPath for $user"
+    } catch {
+        Write-Error "Failed to grant permissions"
+    }
+}
+
+# Iterate through each registry setting
 foreach ($setting in $registrySettings) {
     # Extract the registry path, value name, value, and type from the current setting
     $registryPath = $setting.Path
@@ -426,12 +451,17 @@ foreach ($setting in $registrySettings) {
         New-Item -Path $registryPath -Force | Out-Null
     }
 
+    # Grant permissions to the current user for the registry path
+    Grant-FullControlToRegistryKey -RegistryPath $registryPath
+
     # Set the registry value based on the type
     if ($type -eq "DWORD") {
         New-ItemProperty -Path $registryPath -Name $valueName -Value $value -PropertyType DWORD -Force | Out-Null
     } elseif ($type -eq "SZ") {
         New-ItemProperty -Path $registryPath -Name $valueName -Value $value -PropertyType String -Force | Out-Null
     }
+
+    Write-Host "Successfully updated $valueName in $registryPath"
 }
 
 Write-Output "All specified registry values have been updated."
