@@ -462,7 +462,7 @@ foreach ($setting in $registrySettings) {
     }
 
     Write-Host "Successfully updated $valueName in $registryPath"
+    gpupudate /force
 }
 
-gpupudate /force
 Write-Output "All specified registry values have been updated."
