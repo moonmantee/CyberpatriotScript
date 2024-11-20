@@ -4,6 +4,6 @@ Invoke-WebRequest -Uri $url -OutFile $output
 $destination = "C:\repo-folder"
 Expand-Archive -Path $output -DestinationPath $destination
 cd $destination
-cd ".\CyberpatriotScript-main\"
+cd ".\CyberpatriotScript-main\Windows"
 Set-ExecutionPolicy RemoteSigned
 .\main.ps1
