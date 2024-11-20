@@ -452,7 +452,7 @@ foreach ($setting in $registrySettings) {
     }
 
     # Grant permissions to the current user for the registry path
-    Grant-FullControlToRegistryKey -RegistryPath $registryPath
+   # Grant-FullControlToRegistryKey -RegistryPath $registryPath
 
     # Set the registry value based on the type
     if ($type -eq "DWORD") {
