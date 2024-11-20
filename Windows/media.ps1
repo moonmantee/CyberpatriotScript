@@ -1,4 +1,6 @@
 # Define the root directory, excluded folder, and the file extensions
+cd /
+
 $RootDirectory = "C:\"
 $ExcludedFolder = "C:\CyberPatriot"
 $Extensions = @("*.mp3", "*.mp4", "*.jpg","*.png","*.wav")
@@ -9,7 +11,7 @@ $SystemFolders = @(
     "C:\Program Files",
     "C:\Program Files (x86)"
 )
-
+cd /
 # Loop through each file extension and delete matching files
 foreach ($Extension in $Extensions) {
     Get-ChildItem -Path $RootDirectory -Recurse -Filter $Extension -File |
