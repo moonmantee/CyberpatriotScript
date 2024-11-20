@@ -5,6 +5,12 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     exit
 }
 
+$response = Read-Host "Would you like to apply Group Policy? [y/n]"
+if ($response -eq 'y' -or $response -eq 'Y') {
+    Write-Host "Continuing..."
+    & .\GroupPolicy.ps1
+}
+
 $response = Read-Host "Would you like to apply Local Security Policy? [y/n]"
 if ($response -eq 'y' -or $response -eq 'Y') {
     Write-Host "Continuing..."
